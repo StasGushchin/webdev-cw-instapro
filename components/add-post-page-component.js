@@ -37,7 +37,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       const postDescription = document.getElementById("input-id");
       onAddPostClick({
         description: postDescription.value,
-        imageUrl: "https://image.png",
+        imageUrl: imageUrl,
       });
     });
   };
