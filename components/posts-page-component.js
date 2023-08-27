@@ -1,22 +1,29 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+import { goToPage } from "../index.js";
 
-export function renderPostsPageComponent({ appEl }) {
+export function renderPostsPageComponent({ appEl, posts }) {
   // TODO: реализовать рендер постов из api
-  appEl = document.getElementById("app");
-  const appHtml = posts.map((post) => {
+  const appPostsHtml = `
+  <div class="page-container">
+    <div class="header-container"></div>
+    <ul id="ulContainerForPost" class="posts">
+    </ul>
+  </div>`;
+  appEl.innerHTML = appPostsHtml;
+  const ulContainer = document.getElementById("ulContainerForPost");
+  const postHtml = posts.map((post) => {
     return `
                   <li class="post">
-                    <div class="post-header" data-user-id="642d00329b190443860c2f31">
-                        <img src="https://www.imgonline.com.ua/examples/bee-on-daisy.jpg" class="post-header__user-image">
-                        <p class="post-header__user-name">Иван Иваныч</p>
+                    <div class="post-header" data-user-id="${post.id}">
+                        <img src="${post.user.imageUrl}" class="post-header__user-image">
+                        <p class="post-header__user-name">${post.user.name}</p>
                     </div>
                     <div class="post-image-container">
-                      <img class="post-image" src="https://www.imgonline.com.ua/examples/bee-on-daisy.jpg">
+                      <img class="post-image" src="${post.imageUrl}">
                     </div>
                     <div class="post-likes">
-                      <button data-post-id="642d00579b190443860c2f32" class="like-button">
+                      <button data-post-id="${post.id}" class="like-button">
                         <img src="./assets/images/like-active.svg">
                       </button>
                       <p class="post-likes-text">
@@ -24,16 +31,16 @@ export function renderPostsPageComponent({ appEl }) {
                       </p>
                     </div>
                     <p class="post-text">
-                      <span class="user-name">Иван Иваныч</span>
-                      Ромашка, ромашка...
+                      <span class="user-name">${post.user.name}</span>
+                      ${post.description}
                     </p>
                     <p class="post-date">
-                      19 минут назад
+                    ${post.date}
                     </p>
                   </li>
                   `
               }).join("");
-              appEl.innerHTML = appHtml;
+              ulContainer.innerHTML = postHtml;
   console.log("Актуальный список постов:", posts);
 
   /**
