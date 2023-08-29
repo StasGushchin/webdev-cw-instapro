@@ -38,7 +38,7 @@ export function renderPostsPageComponent({ appEl, posts, token }) {
                         likesLength === 0
                           ? 0
                           : `${post.likes.at(-1).name}${
-                              likesLength > 1 ? `и еще ${likesLength - 1}` : ""
+                              likesLength > 1 ? ` и еще ${likesLength - 1}` : ""
                             }`
                       }</strong>
                     </p>
