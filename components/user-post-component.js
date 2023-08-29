@@ -1,8 +1,9 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { goToPage, page } from "../index.js";
+import { dislike, postLike } from "../api.js";
 
-export function renderPostsUserPageComponent({ appEl, posts }) {
+export function renderPostsUserPageComponent({ appEl, posts, token }) {
     const userPost = posts[0];
     const {user} = userPost;
     

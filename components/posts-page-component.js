@@ -72,7 +72,7 @@ export function renderPostsPageComponent({ appEl, posts, token }) {
       });
     });
   }
-}
+
 
 const likeButtonElements = document.querySelectorAll(".like-button");
 
@@ -101,3 +101,4 @@ likeButtonElements.forEach((likeButtonElement, index) => {
     }
   });
 });
+}
