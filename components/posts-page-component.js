@@ -1,8 +1,9 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { goToPage } from "../index.js";
+import { goToPage, page } from "../index.js";
 
 export function renderPostsPageComponent({ appEl, posts }) {
+  console.log(page);
   // TODO: реализовать рендер постов из api
   const appPostsHtml = `
   <div class="page-container">
@@ -35,7 +36,7 @@ export function renderPostsPageComponent({ appEl, posts }) {
                       ${post.description}
                     </p>
                     <p class="post-date">
-                    ${post.date}
+                    ${post.createdAt}
                     </p>
                   </li>
                   `

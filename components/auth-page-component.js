@@ -1,8 +1,12 @@
 import { loginUser, registerUser } from "../api.js";
+import { page } from "../index.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
+
+
 export function renderAuthPageComponent({ appEl, setUser }) {
+  console.log(page);
   let isLoginMode = true;
   let imageUrl = "";
 
