@@ -4,22 +4,33 @@ import { goToPage, page } from "../index.js";
 
 export function renderPostsUserPageComponent({ appEl, posts }) {
     const userPost = posts[0];
-    const {user}= userPost;
+    const {user} = userPost;
     
     const appHtml = posts
     .map((post) => {
+    const likesLength = post.likes.length;
     return `<li class="post"> 
     <div class="post-image-container">
       <img class="post-image" src="${post.imageUrl}">
     </div>
     <div class="post-likes">
-      <button data-post-id="${post.id}" class="like-button">
-        <img src="./assets/images/like-not-active.svg">
-      </button>
-      <p class="post-likes-text">
-        Нравится: <strong>xxcx</strong> и <strong>еще 2</strong>
-      </p>
-    </div>
+    <button data-post-id="${post.id}" class="like-button">
+      <img src="${
+        post.isLiked
+          ? "./assets/images/like-active.svg"
+          : "./assets/images/like-not-active.svg"
+      }">
+    </button>
+    <p class="post-likes-text">
+      Нравится: <strong>${
+        likesLength === 0
+          ? 0
+          : `${post.likes.at(-1).name}${
+              likesLength > 1 ? `и еще ${likesLength - 1}` : ""
+            }`
+      }</strong>
+    </p>
+  </div>
     <p class="post-text">
         <span class="user-name">${post.user.name}</span>
         ${post.description}
@@ -62,4 +73,32 @@ export function renderPostsUserPageComponent({ appEl, posts }) {
       });
     });
   }
+
+  const likeButtonElements = document.querySelectorAll(".like-button");
+
+  likeButtonElements.forEach((likeButtonElement, index) => {
+    likeButtonElement.addEventListener("click", (event) => {
+      const post = posts[index];
+      console.log(post);
+      let { id } = post;
+      console.log(id);
+      let { isLiked } = post;
+      console.log(isLiked);
+      if (isLiked) {
+        dislike({ token, id }).then((responseData) => {
+          console.log(responseData.post.likes);
+          posts[index].likes = responseData.post.likes;
+          posts[index].isLiked = responseData.post.isLiked;
+          renderPostsPageComponent({ appEl, posts, token });
+        });
+      } else {
+        postLike({ token, id }).then((responseData) => {
+          console.log(responseData.post.likes);
+          posts[index].likes = responseData.post.likes;
+          posts[index].isLiked = responseData.post.isLiked;
+          renderPostsPageComponent({ appEl, posts, token });
+        });
+      }
+    });
+  });
 }

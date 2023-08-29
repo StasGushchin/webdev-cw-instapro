@@ -93,3 +93,38 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
+export function postLike({ token, id }) {//!Тут была ошибка: при передаче параметра я указал имя аргумена, которое не совпадало с ключами, которые мы вставляли мпри вызове в ф-ю.
+  console.log();
+  return fetch(`${postsHost}/${id}/like`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        throw new Error("Нет авторизации");
+      }
+
+      return response.json();
+    })
+}
+
+
+export function dislike({ token, id }) {
+  console.log();
+  return fetch(`${postsHost}/${id}/dislike`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        throw new Error("Нет авторизации");
+      }
+
+      return response.json();
+    })
+}
