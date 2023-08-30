@@ -2,6 +2,7 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { goToPage, page } from "../index.js";
 import { dislike, postLike } from "../api.js";
+import { formatDistanceToNow } from "date-fns";
 
 export function renderPostsUserPageComponent({ appEl, posts, token }) {
     const userPost = posts[0];
@@ -9,7 +10,10 @@ export function renderPostsUserPageComponent({ appEl, posts, token }) {
     
     const appHtml = posts
     .map((post) => {
-    const likesLength = post.likes.length;
+      const createDate = formatDistanceToNow(new Date(post.createdAt), {
+        locale: ru,
+      });
+      const likesLength = post.likes.length;
     return `<li class="post"> 
     <div class="post-image-container">
       <img class="post-image" src="${post.imageUrl}">
@@ -37,7 +41,7 @@ export function renderPostsUserPageComponent({ appEl, posts, token }) {
         ${post.description}
     </p>
     <p class="post-date">
-        ${post.createdAt}
+        ${createDate}
     </p>
     `;
   })
