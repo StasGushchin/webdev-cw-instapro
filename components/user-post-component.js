@@ -3,6 +3,7 @@ import { renderHeaderComponent } from "./header-component.js";
 import { goToPage, page } from "../index.js";
 import { dislike, postLike } from "../api.js";
 import { formatDistanceToNow } from "date-fns";
+import { ru } from "date-fns/locale";
 
 export function renderPostsUserPageComponent({ appEl, posts, token }) {
     const userPost = posts[0];
