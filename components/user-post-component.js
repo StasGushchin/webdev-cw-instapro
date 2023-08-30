@@ -6,16 +6,16 @@ import { formatDistanceToNow } from "date-fns";
 import { ru } from "date-fns/locale";
 
 export function renderPostsUserPageComponent({ appEl, posts, token }) {
-    const userPost = posts[0];
-    const {user} = userPost;
-    
-    const appHtml = posts
+  const userPost = posts[0];
+  const { user } = userPost;
+
+  const appHtml = posts
     .map((post) => {
       const createDate = formatDistanceToNow(new Date(post.createdAt), {
         locale: ru,
       });
       const likesLength = post.likes.length;
-    return `<li class="post"> 
+      return `<li class="post"> 
     <div class="post-image-container">
       <img class="post-image" src="${post.imageUrl}">
     </div>
@@ -45,8 +45,8 @@ export function renderPostsUserPageComponent({ appEl, posts, token }) {
         ${createDate}
     </p>
     `;
-  })
-  .join("");
+    })
+    .join("");
 
   const appPostsHtml = `
   <div class="page-container">
@@ -60,9 +60,9 @@ export function renderPostsUserPageComponent({ appEl, posts, token }) {
     </ul>
   </div>`;
   appEl.innerHTML = appPostsHtml;
-  
+
   console.log("Актуальный список постов:", posts);
- 
+
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow

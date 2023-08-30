@@ -16,15 +16,18 @@ export function renderPostsPageComponent({ appEl, posts, token }) {
   </div>`;
   appEl.innerHTML = appPostsHtml;
   const ulContainer = document.getElementById("ulContainerForPost");
-  const postHtml = posts.map((post) => {
-    const createDate = formatDistanceToNow(new Date(post.createdAt), {
-      locale: ru,
-    });
-    const likesLength = post.likes.length;
-    return `
+  const postHtml = posts
+    .map((post) => {
+      const createDate = formatDistanceToNow(new Date(post.createdAt), {
+        locale: ru,
+      });
+      const likesLength = post.likes.length;
+      return `
                   <li class="post">
                     <div class="post-header" data-user-id="${post.user.id}">
-                        <img src="${post.user.imageUrl}" class="post-header__user-image">
+                        <img src="${
+                          post.user.imageUrl
+                        }" class="post-header__user-image">
                         <p class="post-header__user-name">${post.user.name}</p>
                     </div>
                     <div class="post-image-container">
@@ -56,9 +59,10 @@ export function renderPostsPageComponent({ appEl, posts, token }) {
                     ${createDate}
                     </p>
                   </li>
-                  `
-              }).join("");
-              ulContainer.innerHTML = postHtml;
+                  `;
+    })
+    .join("");
+  ulContainer.innerHTML = postHtml;
   console.log("Актуальный список постов:", posts);
 
   /**
@@ -78,32 +82,31 @@ export function renderPostsPageComponent({ appEl, posts, token }) {
     });
   }
 
+  const likeButtonElements = document.querySelectorAll(".like-button");
 
-const likeButtonElements = document.querySelectorAll(".like-button");
-
-likeButtonElements.forEach((likeButtonElement, index) => {
-  likeButtonElement.addEventListener("click", (event) => {
-    const post = posts[index];
-    console.log(post);
-    let { id } = post;
-    console.log(id);
-    let { isLiked } = post;
-    console.log(isLiked);
-    if (isLiked) {
-      dislike({ token, id }).then((responseData) => {
-        console.log(responseData.post.likes);
-        posts[index].likes = responseData.post.likes;
-        posts[index].isLiked = responseData.post.isLiked;
-        renderPostsPageComponent({ appEl, posts, token });
-      });
-    } else {
-      postLike({ token, id }).then((responseData) => {
-        console.log(responseData.post.likes);
-        posts[index].likes = responseData.post.likes;
-        posts[index].isLiked = responseData.post.isLiked;
-        renderPostsPageComponent({ appEl, posts, token });
-      });
-    }
+  likeButtonElements.forEach((likeButtonElement, index) => {
+    likeButtonElement.addEventListener("click", (event) => {
+      const post = posts[index];
+      console.log(post);
+      let { id } = post;
+      console.log(id);
+      let { isLiked } = post;
+      console.log(isLiked);
+      if (isLiked) {
+        dislike({ token, id }).then((responseData) => {
+          console.log(responseData.post.likes);
+          posts[index].likes = responseData.post.likes;
+          posts[index].isLiked = responseData.post.isLiked;
+          renderPostsPageComponent({ appEl, posts, token });
+        });
+      } else {
+        postLike({ token, id }).then((responseData) => {
+          console.log(responseData.post.likes);
+          posts[index].likes = responseData.post.likes;
+          posts[index].isLiked = responseData.post.isLiked;
+          renderPostsPageComponent({ appEl, posts, token });
+        });
+      }
+    });
   });
-});
 }

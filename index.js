@@ -74,7 +74,7 @@ export const goToPage = (newPage, data) => {
 
       posts = posts.filter((post) => {
         if (post.user.id === data.userId) {
-          return post
+          return post;
         } else {
           return;
         }
@@ -121,7 +121,7 @@ const renderApp = () => {
       onAddPostClick({ description, imageUrl }) {
         // TODO: реализовать добавление поста в API
         console.log("Добавляю пост...", { description, imageUrl });
-        addPosts({token: getToken(), description, imageUrl})
+        addPosts({ token: getToken(), description, imageUrl });
         goToPage(POSTS_PAGE);
       },
     });
@@ -129,7 +129,9 @@ const renderApp = () => {
 
   if (page === POSTS_PAGE) {
     return renderPostsPageComponent({
-      appEl, posts, token: getToken()
+      appEl,
+      posts,
+      token: getToken(),
     });
   }
 

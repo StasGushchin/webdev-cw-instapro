@@ -31,8 +31,6 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     appEl.innerHTML = appHtml;
 
-    
-
     document.getElementById("add-button").addEventListener("click", () => {
       const postDescription = document.getElementById("input-id");
       onAddPostClick({
@@ -49,12 +47,12 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
   const uploadImageContainer = appEl.querySelector(".upload-image");
 
-    if (uploadImageContainer) {
-      renderUploadImageComponent({
-        element: appEl.querySelector(".upload-image"),
-        onImageUrlChange(newImageUrl) {
-          imageUrl = newImageUrl;
-        },
-      });
-    }
+  if (uploadImageContainer) {
+    renderUploadImageComponent({
+      element: appEl.querySelector(".upload-image"),
+      onImageUrlChange(newImageUrl) {
+        imageUrl = newImageUrl;
+      },
+    });
+  }
 }

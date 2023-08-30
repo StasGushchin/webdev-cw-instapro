@@ -21,7 +21,6 @@ export function getPosts({ token }) {
     .then((data) => {
       return data.posts;
     });
-
 }
 
 export function addPosts({ token, description, imageUrl }) {
@@ -32,7 +31,7 @@ export function addPosts({ token, description, imageUrl }) {
     },
     body: JSON.stringify({
       description,
-      imageUrl
+      imageUrl,
     }),
   })
     .then((response) => {
@@ -45,7 +44,6 @@ export function addPosts({ token, description, imageUrl }) {
     .then((data) => {
       return data.posts;
     });
-
 }
 
 // https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
@@ -94,23 +92,22 @@ export function uploadImage({ file }) {
   });
 }
 
-export function postLike({ token, id }) {//!Тут была ошибка: при передаче параметра я указал имя аргумена, которое не совпадало с ключами, которые мы вставляли мпри вызове в ф-ю.
+export function postLike({ token, id }) {
+  //!Тут была ошибка: при передаче параметра я указал имя аргумена, которое не совпадало с ключами, которые мы вставляли мпри вызове в ф-ю.
   console.log();
   return fetch(`${postsHost}/${id}/like`, {
     method: "POST",
     headers: {
       Authorization: token,
     },
-  })
-    .then((response) => {
-      if (response.status === 401) {
-        throw new Error("Нет авторизации");
-      }
+  }).then((response) => {
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
+    }
 
-      return response.json();
-    })
+    return response.json();
+  });
 }
-
 
 export function dislike({ token, id }) {
   console.log();
@@ -119,12 +116,11 @@ export function dislike({ token, id }) {
     headers: {
       Authorization: token,
     },
-  })
-    .then((response) => {
-      if (response.status === 401) {
-        throw new Error("Нет авторизации");
-      }
+  }).then((response) => {
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
+    }
 
-      return response.json();
-    })
+    return response.json();
+  });
 }
