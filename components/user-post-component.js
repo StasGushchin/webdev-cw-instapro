@@ -32,7 +32,7 @@ export function renderPostsUserPageComponent({ appEl, posts, token }) {
         likesLength === 0
           ? 0
           : `${post.likes.at(-1).name}${
-              likesLength > 1 ? `и еще ${likesLength - 1}` : ""
+              likesLength > 1 ? ` и еще ${likesLength - 1}` : ""
             }`
       }</strong>
     </p>
@@ -95,14 +95,14 @@ export function renderPostsUserPageComponent({ appEl, posts, token }) {
           console.log(responseData.post.likes);
           posts[index].likes = responseData.post.likes;
           posts[index].isLiked = responseData.post.isLiked;
-          renderPostsPageComponent({ appEl, posts, token });
+          renderPostsUserPageComponent({ appEl, posts, token });
         });
       } else {
         postLike({ token, id }).then((responseData) => {
           console.log(responseData.post.likes);
           posts[index].likes = responseData.post.likes;
           posts[index].isLiked = responseData.post.isLiked;
-          renderPostsPageComponent({ appEl, posts, token });
+          renderPostsUserPageComponent({ appEl, posts, token });
         });
       }
     });

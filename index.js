@@ -71,7 +71,7 @@ export const goToPage = (newPage, data) => {
       // TODO: реализовать получение постов юзера из API
       console.log("Открываю страницу пользователя: ", data.userId);
       page = USER_POSTS_PAGE;
-
+      
       posts = posts.filter((post) => {
         if (post.user.id === data.userId) {
           return post;
@@ -99,6 +99,7 @@ const renderApp = () => {
       appEl,
       user,
       goToPage,
+      token: getToken()
     });
   }
 
@@ -137,7 +138,7 @@ const renderApp = () => {
 
   if (page === USER_POSTS_PAGE) {
     // TODO: реализовать страницу фотографию пользвателя
-    return renderPostsUserPageComponent({ appEl, posts });
+    return renderPostsUserPageComponent({ appEl, posts, token: getToken(), });
   }
 };
 
