@@ -1,3 +1,4 @@
+import { safe } from "../safe.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
@@ -33,14 +34,16 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     document.getElementById("add-button").addEventListener("click", () => {
       const postDescription = document.getElementById("input-id");
+      const text = safe(postDescription.value);
       onAddPostClick({
-        description: postDescription.value,
+        description: text,
         imageUrl: imageUrl,
       });
     });
   };
 
   render();
+
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
   });
