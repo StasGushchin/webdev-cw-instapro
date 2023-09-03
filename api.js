@@ -1,7 +1,7 @@
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
-const personalKey = "prod";
-const baseHost = "https://webdev-hw-api.vercel.app";
+const personalKey = "stas";
+const baseHost = " https://wedev-api.sky.pro";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
 export function getPosts({ token }) {
@@ -10,6 +10,29 @@ export function getPosts({ token }) {
     headers: {
       Authorization: token,
     },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        throw new Error("Нет авторизации");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      return data.posts;
+    });
+}
+
+export function addPosts({ token, description, imageUrl }) {
+  return fetch(postsHost, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+    body: JSON.stringify({
+      description,
+      imageUrl,
+    }),
   })
     .then((response) => {
       if (response.status === 401) {
@@ -65,6 +88,39 @@ export function uploadImage({ file }) {
     method: "POST",
     body: data,
   }).then((response) => {
+    return response.json();
+  });
+}
+
+export function postLike({ token, id }) {
+  //!Тут была ошибка: при передаче параметра я указал имя аргумена, которое не совпадало с ключами, которые мы вставляли мпри вызове в ф-ю.
+  console.log();
+  return fetch(`${postsHost}/${id}/like`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
+    }
+
+    return response.json();
+  });
+}
+
+export function dislike({ token, id }) {
+  console.log();
+  return fetch(`${postsHost}/${id}/dislike`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
+    }
+
     return response.json();
   });
 }
